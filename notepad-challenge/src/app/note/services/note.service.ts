@@ -18,4 +18,8 @@ export class NoteService {
   noteList(): Observable<any>{
     return this.http.get(BASIC_URL+"/api/notes");
   }
+
+  archiveNoteById(noteId: number): Observable<any> {
+    return this.http.put(`${BASIC_URL}/api/note/${noteId}/archive`, null);
+  }
 }

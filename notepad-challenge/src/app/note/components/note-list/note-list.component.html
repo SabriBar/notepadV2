@@ -1,4 +1,4 @@
-<div class="note-list">
+<!--<div class="note-list">
     <button class="btn-new" (click)="redirectToNote()">+</button>
 
     <div class="note-list-head flex items-center justify-between">
@@ -31,3 +31,79 @@
     </div>
   
   </div>
+-->
+
+<div class="sub-container">
+  <div class="subtittle">
+    <h2 class="note" appTituloEstilo>Notes</h2>
+  </div>
+  <div class="add">
+    <button mat-raised-button (click)="redirectToNote()">Add Note</button>
+  </div>
+</div>
+
+<div class="mat-elevation-z8" style="width: 80%; margin-left: 10%; margin-bottom: 2%;">
+  <table mat-table class="mat-elevation-z8" [dataSource]="dataSource">
+
+    <!-- Columna Title -->
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef> Title </th>
+      <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+    </ng-container>
+
+    <!-- Columna Content -->
+    <ng-container matColumnDef="content">
+      <th mat-header-cell *matHeaderCellDef> Content </th>
+      <td mat-cell *matCellDef="let element"> {{element.content}} </td>
+    </ng-container>
+
+  <!-- Columna Tags -->
+<ng-container matColumnDef="tags">
+  <th mat-header-cell *matHeaderCellDef> Tags </th>
+  <td mat-cell *matCellDef="let element">
+    <div *ngIf="element.tags && element.tags.length > 0">
+      <p *ngFor="let tag of element.tags" class="note-item-tags">
+        Tag: {{ tag }}
+      </p>
+    </div>
+  </td>
+</ng-container>
+
+    
+
+ <!-- Columna Acciones -->
+<ng-container matColumnDef="archive">
+  <th mat-header-cell *matHeaderCellDef></th>
+  <td mat-cell *matCellDef="let element">
+    <button mat-icon-button matTooltip="Archivar" (click)="archiveNoteById(element.id)">
+      <mat-icon>archive</mat-icon>
+    </button>
+  </td>
+</ng-container>
+
+<!-- Nueva Columna Acciones para Editar y Dar de Baja -->
+<ng-container matColumnDef="acciones">
+  <th mat-header-cell *matHeaderCellDef></th>
+  <td mat-cell *matCellDef="let element; let i = index;" style="text-align: right;">
+    <a class="pointer" matTooltip="Modificar" style="color: #4a2885;">
+      <mat-icon>edit</mat-icon>
+    </a>
+    <a class="pointer" matTooltip="Dar de Baja" style="color: #4a2885;">
+      <mat-icon>delete</mat-icon>
+    </a>
+  </td>
+</ng-container>
+  
+
+    <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">No hay notas</td>
+    </tr>
+
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 15, 20]" showFirstLastButtons aria-label="Selecciona cantidad de elementos">
+  </mat-paginator>
+</div>
