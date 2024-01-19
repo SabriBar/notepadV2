@@ -1,0 +1,19 @@
+
+<div class="container">
+    <form [formGroup]="createNoteForm" (ngSubmit)="createNote()">
+
+        <label for="title">Título:</label>
+        <input type="text" id="title" name="title" required formControlName="title">
+      
+        <label for="content">Contenido:</label>
+        <textarea id="content" name="content" required formControlName="content"></textarea>
+      
+        <label for="tags">Etiquetas:</label>
+        <input type="text" id="tags" name="tags" required formControlName="tags">
+      
+        <button type="submit">Guardar</button>
+      </form>
+      <a routerLink="/">Volver a la Lista</a>
+    </div>
+
+   

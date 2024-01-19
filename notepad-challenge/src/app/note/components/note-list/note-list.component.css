@@ -1,0 +1,46 @@
+/* Contenedor */
+.note-list {
+    background-color: #2C2C2C;
+    color: white;
+    width: 300px;
+    height: 100vh;
+}
+
+/* Encabezado */
+.note-list-head {
+    padding: 10px;
+    border-bottom: 1px solid #444;
+}
+
+/* Botones */
+.sidebar-toggle-btn, .add-note-btn {
+    background-color: transparent;
+    border: none;
+}
+
+/* Título */
+.note-list-title {
+    font-size: 18px;
+}
+
+/* Barra de búsqueda */
+.search-group {
+    padding: 10px;
+}
+
+.search-control {
+    background-color: #444; 
+    color:white; 
+    border:none; 
+    padding-left :5px; 
+}
+
+.search-btn i{
+   color:#888
+}
+
+/* Elementos de notas */
+.note-items .note-item{
+   padding :10px; 
+   border-bottom :1px solid #444
+}

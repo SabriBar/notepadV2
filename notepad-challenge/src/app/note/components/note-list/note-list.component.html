@@ -1,0 +1,33 @@
+<div class="note-list">
+    <button class="btn-new" (click)="redirectToNote()">+</button>
+
+    <div class="note-list-head flex items-center justify-between">
+      <button type="button" class="sidebar-toggle-btn">
+        <i class="bi bi-list"></i>
+      </button>
+      <div class="note-list-title">All Notes</div>
+      <button type="button" class="add-note-btn text-white">
+        <i class="bi bi-plus"></i>
+      </button>
+    </div>
+    <div class="note-list-search">
+      <div class="search-group flex items-center">
+        <div type="submit" class="search-btn text-gray">
+          <i class="bi bi-search"></i>
+        </div>
+        <input type="text" class="search-control w-full" placeholder="Search all notes and tags" />
+      </div>
+    </div>
+  
+    <div class="note-list-main">
+      <div class="note-items">
+  
+        <div *ngFor="let note of notes" class="note-item">
+          <div class="note-item-title">{{note.title}}</div>
+          <p class="note-item-text">{{note.content}}</p>
+        </div>
+
+      </div>
+    </div>
+  
+  </div>
