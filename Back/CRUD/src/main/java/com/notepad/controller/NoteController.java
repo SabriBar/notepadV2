@@ -1,12 +1,15 @@
 package com.notepad.controller;
 import com.notepad.entity.Note;
 import com.notepad.service.NoteService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/api")
@@ -64,9 +67,13 @@ public class NoteController {
        return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/archive/{id}")
-    public void archiveNoteById(@PathVariable Long id, @RequestBody ArchiveRequest request) {
-        noteService.archiveNoteById(id, request.isArchived());
+    @PutMapping("/note/{id}/archive")
+    public ResponseEntity<String> archiveNoteById(@PathVariable Long id, @RequestBody ArchiveRequest request) {
+        noteService.archiveNoteById(id, request != null ? request.isArchived() : null);
+        return ResponseEntity.ok("Note archived successfully");
     }
+
+
+
 }
 

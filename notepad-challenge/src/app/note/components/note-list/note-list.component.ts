@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Note } from 'src/app/shared/models/note';
 import { MatDialog } from '@angular/material/dialog';
 import { UpdateNoteComponent } from '../update-note/update-note.component';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-note-list',
@@ -14,9 +15,10 @@ import { UpdateNoteComponent } from '../update-note/update-note.component';
 })
 export class NoteListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  
 
   dataSource!: MatTableDataSource<Note>;
-  columnas: string[] = ['title', 'content', 'archive', 'acciones'];
+  columnas: string[] = ['title', 'content', 'acciones'];
 
   constructor(
     private router: Router,
@@ -51,17 +53,32 @@ export class NoteListComponent implements OnInit {
     this.router.navigate(['/note']);
   }
 
-  archiveNoteById(noteId: number): void {
-    this.noteService.archiveNoteById(noteId).subscribe({
-      next: (res) => {
-        console.log(`La nota con ID ${noteId} ha sido archivada.`);
-        this.noteList(); // Actualizar la lista de notas después de archivar
-      },
-      error: (error) => {
-        console.error('Error al archivar la nota:', error);
-      }
+  archiveNoteById(noteId: number, archived: boolean): void {
+    this.noteService.archiveNoteById(noteId, archived).subscribe({
+        next: (res) => {
+            console.log(`La nota con ID ${noteId} ha sido archivada.`);
+
+            // Verificar si la respuesta es un objeto JSON válido
+            try {
+                const jsonResponse = JSON.parse(res);
+                // Respuesta es un objeto JSON válido
+                // Realizar cualquier manejo adicional necesario para objetos JSON
+            } catch (e) {
+                // Respuesta no es un objeto JSON válido
+                console.log('Respuesta del servidor (Texto):', res);
+            }
+
+            this.noteList(); // Actualizar la lista de notas después de archivar
+        },
+        error: (error) => {
+            console.error('Error al archivar la nota:', error);
+        }
     });
-  }
+}
+
+
+
+
 
   deleteNote(id: number){
     this.noteService.deleteNote(id).subscribe((res) => {

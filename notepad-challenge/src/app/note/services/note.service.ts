@@ -23,10 +23,11 @@ export class NoteService {
     return this.http.get(BASIC_URL+"/api/note/" + id);
   }
 
-  archiveNoteById(noteId: number): Observable<any> {
-    return this.http.put(`${BASIC_URL}/api/note/${noteId}/archive`, null);  
-  }
+  archiveNoteById(noteId: number, archived: boolean): Observable<any> {
+    return this.http.put(`${BASIC_URL}/api/note/${noteId}/archive`, { archived }, { responseType: 'text' });
+}
 
+  
   deleteNote(id: number): Observable<any>{
     return this.http.delete(BASIC_URL+"/api/note/" + id);
   }

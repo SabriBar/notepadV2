@@ -2,6 +2,7 @@ package com.notepad.service;
 
 import com.notepad.entity.Note;
 import com.notepad.repository.NoteRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -52,14 +53,20 @@ public class NoteService {
         return noteRepository.save(note);
     }
 
-    public void archiveNoteById(Long id, boolean archived) {
+    public void archiveNoteById(Long id, Boolean archived) {
+        if (archived == null) {
+            throw new IllegalArgumentException("Parameter 'archived' cannot be null.");
+        }
+
         Optional<Note> optionalNote = noteRepository.findById(id);
         if (optionalNote.isPresent()) {
             Note note = optionalNote.get();
             note.setArchived(archived);
             noteRepository.save(note);
         } else {
-            throw new RuntimeException("Note not found with id: " + id);
+            throw new EntityNotFoundException("Note not found with id: " + id);
         }
     }
+
+
 }
