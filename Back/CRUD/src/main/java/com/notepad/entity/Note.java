@@ -14,7 +14,4 @@ public class Note {
     private String title;
     private String content;
     private boolean archived;
-
-    @ElementCollection
-    private List<String> tags;
 }

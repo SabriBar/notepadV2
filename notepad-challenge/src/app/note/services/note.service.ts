@@ -19,7 +19,20 @@ export class NoteService {
     return this.http.get(BASIC_URL+"/api/notes");
   }
 
-  archiveNoteById(noteId: number): Observable<any> {
-    return this.http.put(`${BASIC_URL}/api/note/${noteId}/archive`, null);
+  getNoteById(id: number): Observable<any>{
+    return this.http.get(BASIC_URL+"/api/note/" + id);
   }
+
+  archiveNoteById(noteId: number): Observable<any> {
+    return this.http.put(`${BASIC_URL}/api/note/${noteId}/archive`, null);  
+  }
+
+  deleteNote(id: number): Observable<any>{
+    return this.http.delete(BASIC_URL+"/api/note/" + id);
+  }
+
+  editNote(id: number, note: any): Observable<any>{
+    return this.http.put(BASIC_URL+"/api/note/" + id, note);
+  }
+
 }

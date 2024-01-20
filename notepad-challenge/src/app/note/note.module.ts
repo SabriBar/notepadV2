@@ -10,7 +10,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
-
+import { MatDialogModule } from '@angular/material/dialog';
+import { RouterLink } from '@angular/router';
 
 
 @NgModule({
@@ -28,7 +29,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatInputModule,
     MatFormFieldModule,
     MatIconModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatDialogModule,
+    RouterLink
     
   ],
   exports:[

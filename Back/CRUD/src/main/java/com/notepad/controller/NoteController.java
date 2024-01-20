@@ -44,17 +44,27 @@ public class NoteController {
         return noteService.createNote(note);
     }
 
-    @PutMapping("/{id}")
-    public Note editNote(@PathVariable Long id, @RequestBody Note updatedNote) {
-        return noteService.editNote(id, updatedNote);
+    @PutMapping("/note/{id}")
+    public ResponseEntity<Note> editNote(@PathVariable Long id, @RequestBody Note note) {
+        Note existingNote = noteService.getNoteById(id);
+        if (existingNote == null)
+            return ResponseEntity.notFound().build();
+        existingNote.setTitle(note.getTitle());
+        existingNote.setContent(note.getContent());
+    Note editNotee = noteService.editNote(existingNote);
+    return ResponseEntity.ok(editNotee);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteNoteById(@PathVariable Long id) {
-        noteService.deleteNoteById(id);
+    @DeleteMapping("/note/{id}")
+    public ResponseEntity<?> deleteNote(@PathVariable Long id) {
+       Note existingNote =  noteService.getNoteById(id);
+       if (existingNote == null)
+           return ResponseEntity.notFound().build();
+       noteService.deleteNote(id);
+       return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/{id}/archive")
+    @PutMapping("/archive/{id}")
     public void archiveNoteById(@PathVariable Long id, @RequestBody ArchiveRequest request) {
         noteService.archiveNoteById(id, request.isArchived());
     }

@@ -4,6 +4,8 @@ import { NoteService } from '../../services/note.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Note } from 'src/app/shared/models/note';
+import { MatDialog } from '@angular/material/dialog';
+import { UpdateNoteComponent } from '../update-note/update-note.component';
 
 @Component({
   selector: 'app-note-list',
@@ -14,15 +16,21 @@ export class NoteListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   dataSource!: MatTableDataSource<Note>;
-  columnas: string[] = ['title', 'content', 'tags', 'archive', 'acciones'];
+  columnas: string[] = ['title', 'content', 'archive', 'acciones'];
 
   constructor(
     private router: Router,
-    private noteService: NoteService
+    private noteService: NoteService,
+    private _dialog: MatDialog
   ) {}
+
 
   ngOnInit() {
     this.noteList();
+  }
+
+  updateNote(){
+    this._dialog.open(UpdateNoteComponent)
   }
 
   noteList() {
@@ -53,5 +61,12 @@ export class NoteListComponent implements OnInit {
         console.error('Error al archivar la nota:', error);
       }
     });
+  }
+
+  deleteNote(id: number){
+    this.noteService.deleteNote(id).subscribe((res) => {
+      console.log(res);
+      this.noteList();
+    })
   }
 }

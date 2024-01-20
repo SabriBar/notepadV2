@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {NoteModule} from './note/note.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import {MatTableModule} from '@angular/material/table';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [

@@ -38,15 +38,18 @@ public class NoteService {
             Note note = existingNote.get();
             note.setTitle(updatedNote.getTitle());
             note.setContent(updatedNote.getContent());
-            note.setTags(updatedNote.getTags());
             return noteRepository.save(note);
         } else {
             throw new RuntimeException("Note not found with id: " + id);
         }
     }
 
-    public void deleteNoteById(Long id) {
+    public void deleteNote(Long id) {
         noteRepository.deleteById(id);
+    }
+
+    public Note editNote(Note note){
+        return noteRepository.save(note);
     }
 
     public void archiveNoteById(Long id, boolean archived) {

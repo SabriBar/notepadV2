@@ -6,13 +6,6 @@
 
     <label for="content">Contenido:</label>
     <textarea id="content" name="content" required formControlName="content"></textarea>
-
-    <label for="tags">Etiquetas:</label>
-    <div formArrayName="tags">
-      <div *ngFor="let tagCtrl of tagsFormArray.controls; let i=index">
-        <input type="text" [id]="'tags' + i" name="tags" required [formControlName]="i">
-      </div>
-    </div>
     
 
     <button type="submit">Guardar</button>
