@@ -1,47 +1,43 @@
-
-
 <div class="sub-container">
   <div class="subtittle">
     <h2 class="note" appTituloEstilo>Notes</h2>
   </div>
   <div class="add">
     <button mat-raised-button (click)="redirectToNote()">Add Note</button>
+    <button mat-raised-button (click)="toggleView('all')">All Notes</button>
+    <button mat-raised-button (click)="toggleView('archived')">Archived Notes</button>
+    <button mat-raised-button (click)="toggleView('nonArchived')">Non-Archived Notes</button>
   </div>
 </div>
 
 <div class="mat-elevation-z8" style="width: 80%; margin-left: 10%; margin-bottom: 2%;">
   <table mat-table class="mat-elevation-z8" [dataSource]="dataSource">
+    <!-- ... Resto del código ... -->
 
-    <!-- Columna Title -->
     <ng-container matColumnDef="title">
       <th mat-header-cell *matHeaderCellDef> Title </th>
       <td mat-cell *matCellDef="let element"> {{element.title}} </td>
     </ng-container>
 
-    <!-- Columna Content -->
     <ng-container matColumnDef="content">
       <th mat-header-cell *matHeaderCellDef> Content </th>
       <td mat-cell *matCellDef="let element"> {{element.content}} </td>
     </ng-container>
 
-
-<!-- Nueva Columna Acciones para Editar y Dar de Baja -->
-<ng-container matColumnDef="acciones">
-  <th mat-header-cell *matHeaderCellDef></th>
-  <td mat-cell *matCellDef="let element; let i = index;" style="text-align: right;">
-    <button routerLink="/note/{{element.id}}" class="pointer" matTooltip="Modificar" style="color: #4a2885;">
-      <mat-icon>edit</mat-icon>
-    </button>
-    <a (click)="deleteNote(element.id)" class="pointer" matTooltip="Dar de Baja" style="color: #4a2885;">
-      <mat-icon>delete</mat-icon>
-    </a>
-    <button mat-icon-button (click)="archiveNoteById(element.id, true)" matTooltip="Archive">
-      <mat-icon>archive</mat-icon>
-  </button>
-
-  </td>
-</ng-container>
-  
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element; let i = index;" style="text-align: right;">
+        <button routerLink="/note/{{element.id}}" class="pointer" matTooltip="Modificar" style="color: #4a2885;">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <a (click)="deleteNote(element.id)" class="pointer" matTooltip="Dar de Baja" style="color: #4a2885;">
+          <mat-icon>delete</mat-icon>
+        </a>
+        <button mat-icon-button (click)="archiveNoteById(element.id, true)" matTooltip="Archive">
+          <mat-icon>archive</mat-icon>
+        </button>
+      </td>
+    </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="columnas"></tr>
     <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
@@ -49,7 +45,6 @@
     <tr class="mat-row" *matNoDataRow>
       <td class="mat-cell" colspan="4">No hay notas</td>
     </tr>
-
   </table>
 
   <mat-paginator [pageSizeOptions]="[5, 10, 15, 20]" showFirstLastButtons aria-label="Selecciona cantidad de elementos">
