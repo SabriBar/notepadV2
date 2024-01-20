@@ -67,12 +67,13 @@ public class NoteController {
        return ResponseEntity.ok().build();
     }
 
+
     @PutMapping("/note/{id}/archive")
     public ResponseEntity<String> archiveNoteById(@PathVariable Long id, @RequestBody ArchiveRequest request) {
+        System.out.println("Archiving request received for ID: " + id + ", archived: " + (request != null ? request.isArchived() : null));
         noteService.archiveNoteById(id, request != null ? request.isArchived() : null);
         return ResponseEntity.ok("Note archived successfully");
     }
-
 
 
 }

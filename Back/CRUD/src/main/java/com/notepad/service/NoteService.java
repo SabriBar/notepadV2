@@ -61,12 +61,14 @@ public class NoteService {
         Optional<Note> optionalNote = noteRepository.findById(id);
         if (optionalNote.isPresent()) {
             Note note = optionalNote.get();
+            System.out.println("Archiving note with ID: " + id + ", archived: " + archived);
             note.setArchived(archived);
             noteRepository.save(note);
         } else {
             throw new EntityNotFoundException("Note not found with id: " + id);
         }
     }
+
 
 
 }

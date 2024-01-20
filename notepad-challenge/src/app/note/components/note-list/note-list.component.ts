@@ -35,11 +35,9 @@ export class NoteListComponent implements OnInit {
     this._dialog.open(UpdateNoteComponent);
   }
 
-  toggleView(view: 'all' | 'archived' | 'nonArchived'): void {
+  toggleView(view: 'archived' | 'nonArchived'): void {
     switch (view) {
-      case 'all':
-        this.showArchived = false;
-        break;
+
       case 'archived':
         this.showArchived = true;
         break;
@@ -93,9 +91,6 @@ export class NoteListComponent implements OnInit {
   }
 
   archiveNoteById(noteId: number, archived: boolean): void {
-    // Verificar si la nota ya está en la lista de archivedNotes
-    const existingArchivedNoteIndex = this.archivedNotes.findIndex((note) => note.id === noteId);
-  
     this.noteService.archiveNoteById(noteId, archived).subscribe({
       next: (res) => {
         console.log(`La nota con ID ${noteId} ha sido ${archived ? 'archivada' : 'desarchivada'}.`);
@@ -103,38 +98,37 @@ export class NoteListComponent implements OnInit {
         // Actualizar los conjuntos de datos después de archivar o desarchivar
         const updatedNote = this.allNotes.find((note) => note.id === noteId);
   
-        if (existingArchivedNoteIndex !== -1) {
-          // Si la nota ya está en archivedNotes, actualizar su estado o quitarla si se desarchiva
-          if (archived) {
-            this.archivedNotes[existingArchivedNoteIndex].archived = true;
-          } else {
-            this.archivedNotes.splice(existingArchivedNoteIndex, 1);
-          }
-        } else if (updatedNote) {
-          // Si la nota no está en archivedNotes, agregarla solo si existe en allNotes
+        if (updatedNote) {
           updatedNote.archived = archived;
+  
           if (archived) {
+            // Si se archiva, agregar la nota a archivedNotes
             this.archivedNotes.push(updatedNote);
+          } else {
+            // Si se desarchiva, quitar la nota de archivedNotes
+            const index = this.archivedNotes.findIndex((note) => note.id === noteId);
+            if (index !== -1) {
+              this.archivedNotes.splice(index, 1);
+            }
           }
-        }
   
-        // Actualizar la fuente de datos de la tabla
-        if (this.showArchived) {
-          this.dataSource = new MatTableDataSource<Note>(this.archivedNotes);
-        } else {
+          // Actualizar la fuente de datos de la tabla
+          const nonArchivedNotes = this.allNotes.filter((note) => !note.archived);
           this.dataSource = new MatTableDataSource<Note>(
-            this.allNotes.filter((note) => !note.archived)
+            this.showArchived ? this.archivedNotes : nonArchivedNotes
           );
-        }
   
-        this.dataSource.paginator = this.paginator;
-        this.paginator._changePageSize(this.paginator.pageSize);
+          this.dataSource.paginator = this.paginator;
+          this.paginator._changePageSize(this.paginator.pageSize);
+        }
       },
       error: (error) => {
         console.error(`Error al ${archived ? 'archivar' : 'desarchivar'} la nota:`, error);
       }
     });
   }
+  
+  
   
   
 

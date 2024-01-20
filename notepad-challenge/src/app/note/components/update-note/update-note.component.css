@@ -1,13 +1,62 @@
-.container{
+.container {
+    display: flex;
+  flex-direction: column;
+  max-width: 400px; 
+  margin: 0 auto;
+  align-items: center; 
+  justify-content: center; 
+  height: 100vh; 
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px; 
+  }
+  
+  label {
+    margin-top: 10px;
+  }
+  
+  input,
+  textarea {
+    margin-top: 5px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  button {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #4a2885;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  a {
+    margin-top: 10px;
+    color: #4a2885;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  mat-dialog-content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-}
-
-form {
+  }
+  
+  mat-dialog-title {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  mat-dialog-actions {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
